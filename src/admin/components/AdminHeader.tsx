@@ -3,7 +3,7 @@ import { Search, Bell, MessageSquare, Settings } from "lucide-react";
 import { useSearchParams } from "react-router";
 
 export const AdminHeader: React.FC = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -12,8 +12,6 @@ export const AdminHeader: React.FC = () => {
 
     const query = inputRef.current?.value;
     if (!query) {
-
-      
       setSearchParams((prev) => {
         prev.delete("query");
         return prev;
