@@ -1,3 +1,17 @@
+import { Outlet } from "react-router";
+import { CustomHeader } from "../components/CustomHeader";
+import { CustomFooter } from "../components/CustomFooter";
+
 export const ShopLayout = () => {
-  return <div className="bg-red-700">ShopLayout</div>;
+  return (
+    <div className="min-h-screen bg-background">
+      <CustomHeader />
+
+      {/* Hijos de la ruta */}
+      <Outlet />
+
+      {/* Footer */}
+      <CustomFooter />
+    </div>
+  );
 };

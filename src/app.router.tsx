@@ -1,3 +1,4 @@
+import { lazy } from "react";
 import { createBrowserRouter, Navigate } from "react-router";
 import { ShopLayout } from "./shop/layouts/ShopLayout";
 // import { AdminLayout } from './admin/layouts/AdminLayout';
@@ -10,7 +11,10 @@ import { RegisterPage } from "./auth/pages/register/RegisterPage";
 import { DashboardPage } from "./admin/pages/dashboard/DashboardPage";
 import { AdminProductsPage } from "./admin/pages/products/AdminProductsPage";
 import { AdminProductPage } from "./admin/pages/product/AdminProductPage";
-import { lazy } from "react";
+import {
+  AdminRoute,
+  NotAuthenticatedRoute,
+} from "./components/routes/ProtectedRoutes";
 
 const AuthLayout = lazy(() => import("./auth/layouts/AuthLayout"));
 const AdminLayout = lazy(() => import("./admin/layouts/AdminLayout"));
@@ -26,7 +30,7 @@ export const routerApp = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "product:/idSlug",
+        path: "product/:idSlug",
         element: <ProductPage />,
       },
       {
@@ -39,7 +43,12 @@ export const routerApp = createBrowserRouter([
   // Auth routes
   {
     path: "/auth",
-    element: <AuthLayout />,
+    element: (
+      // protejemos la ruta
+      <NotAuthenticatedRoute>
+        <AuthLayout />
+      </NotAuthenticatedRoute>
+    ),
     children: [
       {
         index: true,
@@ -59,18 +68,22 @@ export const routerApp = createBrowserRouter([
   // Admin routes
   {
     path: "/admin",
-    element: <AdminLayout />,
+    element: (
+      <AdminRoute>
+        <AdminLayout />
+      </AdminRoute>
+    ),
     children: [
       {
         index: true,
         element: <DashboardPage />,
       },
       {
-        path: "products",
+        path: "products/",
         element: <AdminProductsPage />,
       },
       {
-        path: "product/id",
+        path: "products/:id",
         element: <AdminProductPage />,
       },
     ],
@@ -78,6 +91,6 @@ export const routerApp = createBrowserRouter([
   // Comodin
   {
     path: "*",
-    element: <Navigate to={"/"} />,
+    element: <Navigate to={"/"} replace />,
   },
 ]);

@@ -1,5 +1,7 @@
-import React from "react";
-
 export const ProductPage = () => {
-  return <div>ProductPage</div>;
+  return (
+    <>
+      <h1 className="text-3xl font-montserrat">Count. {}</h1>
+    </>
+  );
 };
